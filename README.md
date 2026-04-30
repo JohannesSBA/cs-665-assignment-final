@@ -13,6 +13,10 @@ This assignment implements a small nutrition-tracking application. The project l
 
 https://github.com/JohannesSBA/cs-665-assignment-final
 
+# UML Diagram
+
+![uml diagram](uml.png)
+
 # Implementation Description
 
 For each assignment, please answer the following:
