@@ -14,9 +14,10 @@ package edu.bu.met.cs665;
 public class NotificationService implements DailyLogObserver {
     @Override
     public void update(DailyLog log, User user) {
-        if (log.getDailyCalories() > user.getDailyCalorieGoal()) {
+        DailyGoalSnapshot snapshot = log.captureSnapshot();
+        if (snapshot.getCaloriesConsumed() > snapshot.getCalorieGoal()) {
             System.out.println("Warning: daily calorie goal exceeded.");
-        } else if (log.getDailyCalories() == user.getDailyCalorieGoal()) {
+        } else if (snapshot.getCaloriesConsumed() == (int) snapshot.getCalorieGoal()) {
             System.out.println("Daily calorie goal reached.");
         }
     }

@@ -7,28 +7,29 @@
 
 # Assignment Overview
 
-This assignment implements a small nutrition-tracking application. The project lets a user create food items, group them into meals, log meals for a day, calculate total daily calories, and compare intake against a selected calorie-goal strategy (weight loss, maintenance, or muscle gain).
+This assignment implements a nutrition-tracking application that uses design patterns to manage goals, meals, and notifications. In addition to calorie totals, the project now models richer goal progress with macro targets, supports multiple observer outputs, and uses strategy formulas that calculate daily calories from user attributes.
 
 # GitHub Repository Link:
 
-https://github.com/JohannesSBA/cs-665-assignment-final
+[https://github.com/JohannesSBA/cs-665-assignment-final](https://github.com/JohannesSBA/cs-665-assignment-final)
 
 # UML Diagram
 
-![uml diagram](uml.png)
+![uml.png](uml.png)
 
 # Implementation Description
 
 For each assignment, please answer the following:
 
-- The implementation is flexible because goal calculation is separated through the `GoalStrategy` interface and concrete strategy classes, so new goals can be added without changing existing user logic. The observer abstraction (`DailyLogObserver`) also allows additional notification behaviors to be plugged in independently.
-- The code is organized into focused classes (`User`, `FoodItem`, `Meal`, `DailyLog`, and strategy/observer types) with straightforward responsibilities, which keeps the flow easy to follow and maintain.
-- Reusable interfaces and shared aggregation logic reduce duplication (for example, one `calculateGoal` contract for all calorie-goal behaviors and one meal/log total-calorie path). Avoiding duplication lowers bug risk and makes updates easier because behavior changes happen in one place.
-- The project uses the Strategy pattern for switching calorie-goal behavior at runtime, the Observer pattern for log-change notifications, and the Builder pattern for creating `FoodItem` objects with optional nutrition fields in a readable way.
+- The implementation is flexible because goal calculation is separated through the GoalStrategy interface and concrete strategy classes, so new goals can be added without changing existing user logic. The observer abstraction (DailyLogObserver) also allows additional notification behaviors to be plugged in independently.
+- The implementation is flexible because goal calculation is separated through the GoalStrategy interface and concrete strategy classes, so new goals can be added without changing existing user logic. The observer abstraction (DailyLogObserver) supports multiple observers (NotificationService, ConsoleObserver, SummaryObserver, and GoalProgressObserver) that can be attached or removed independently.
+- The code is organized into focused classes (User, FoodItem, Meal, DailyLog, and strategy/observer types) with straightforward responsibilities, which keeps the flow easy to follow and maintain.
+- Reusable interfaces and shared aggregation logic reduce duplication (for example, one calculateGoal contract for all calorie-goal behaviors and one meal/log total-calorie path). Validation and progress reporting are centralized through domain objects like DailyGoalSnapshot, MealType, and macro-target modeling so logic is not repeated across observers.
+- The project uses the Strategy pattern for calorie-goal behavior with real formulas based on user attributes (age, height, weight, and activity level), the Observer pattern for log-change notifications, and the Builder pattern for creating FoodItem objects with optional nutrition fields in a readable way.
 
 # Maven Commands
 
-We'll use Apache Maven to compile and run this project. You'll need to install Apache Maven (https://maven.apache.org/) on your system.
+We'll use Apache Maven to compile and run this project. You'll need to install Apache Maven ([https://maven.apache.org/](https://maven.apache.org/)) on your system.
 
 Apache Maven is a build automation tool and a project management tool for Java-based projects. Maven provides a standardized way to build, package, and deploy Java applications.
 
@@ -44,9 +45,8 @@ Maven provides a large number of plugins for various tasks, such as compiling co
 
 Type on the command line:
 
-```bash
+bash
 mvn clean compile
-```
 
 ## JUnit Tests
 
@@ -62,9 +62,8 @@ JUnit tests can be run as part of a continuous integration pipeline, where tests
 
 To run, use the following command:
 
-```bash
+bash
 mvn clean test
-```
 
 ## Spotbugs
 
@@ -78,14 +77,13 @@ Using SpotBugs can help to improve the quality and reliability of your code by c
 
 Use the following command:
 
-```bash
+bash
 mvn spotbugs:gui
-```
 
 For more info see
-https://spotbugs.readthedocs.io/en/latest/maven.html
+[https://spotbugs.readthedocs.io/en/latest/maven.html](https://spotbugs.readthedocs.io/en/latest/maven.html)
 
-SpotBugs https://spotbugs.github.io/ is the spiritual successor of FindBugs.
+SpotBugs [https://spotbugs.github.io/](https://spotbugs.github.io/) is the spiritual successor of FindBugs.
 
 ## Checkstyle
 
@@ -99,9 +97,8 @@ Checkstyle is highly configurable and can be customized to fit the needs of your
 
 The following command will generate a report in HTML format that you can open in a web browser.
 
-```bash
+bash
 mvn checkstyle:checkstyle
-```
 
 The HTML page will be found at the following location:
-`target/site/checkstyle.html`
+target/site/checkstyle.html

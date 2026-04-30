@@ -41,6 +41,44 @@ public class DailyLog {
         return total;
     }
 
+    public double getDailyProtein() {
+        double total = 0;
+        for (Meal meal : meals) {
+            total += meal.getTotalProtein();
+        }
+        return total;
+    }
+
+    public double getDailyCarbs() {
+        double total = 0;
+        for (Meal meal : meals) {
+            total += meal.getTotalCarbs();
+        }
+        return total;
+    }
+
+    public double getDailyFat() {
+        double total = 0;
+        for (Meal meal : meals) {
+            total += meal.getTotalFat();
+        }
+        return total;
+    }
+
+    public DailyGoalSnapshot captureSnapshot() {
+        double goal = user.getDailyCalorieGoal();
+        int calories = getDailyCalories();
+
+        // Example macro split: 30% protein, 40% carbs, 30% fat.
+        MacroTargets macroTargets = new MacroTargets(
+                (goal * 0.30) / 4,
+                (goal * 0.40) / 4,
+                (goal * 0.30) / 9
+        );
+
+        return new DailyGoalSnapshot(date, goal, calories, macroTargets);
+    }
+
     public void attachObserver(DailyLogObserver observer) {
         observers.add(observer);
     }
@@ -57,5 +95,9 @@ public class DailyLog {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public List<Meal> getMeals() {
+        return new ArrayList<>(meals);
     }
 }

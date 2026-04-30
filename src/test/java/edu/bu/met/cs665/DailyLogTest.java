@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests calorie total calculations in {@link DailyLog}.
@@ -33,5 +34,21 @@ public class DailyLogTest {
         log.addMeal(lunch);
 
         assertEquals(740, log.getDailyCalories());
+    }
+
+    @Test
+    public void testSnapshotIncludesGoalAndMacroTargets() {
+        User user = new User("Test User", 70, 175, 23, ActivityLevel.LIGHT, new MaintenanceStrategy());
+        Meal meal = new Meal(MealType.BREAKFAST);
+        meal.addFoodItem(new FoodItem.Builder("Oats", 300).protein(10).carbs(55).fat(6).build());
+
+        DailyLog log = new DailyLog(LocalDate.now(), user);
+        log.addMeal(meal);
+
+        DailyGoalSnapshot snapshot = log.captureSnapshot();
+        assertEquals(300, snapshot.getCaloriesConsumed());
+        assertTrue(snapshot.getCalorieGoal() > 0);
+        assertTrue(snapshot.getMacroTargets().getProteinGrams() > 0);
+        assertTrue(snapshot.getProgressPercent() > 0);
     }
 }

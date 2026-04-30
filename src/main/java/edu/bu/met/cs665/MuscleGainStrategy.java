@@ -9,11 +9,11 @@
 package edu.bu.met.cs665;
 
 /**
- * Calculates a fixed calorie goal for muscle gain.
+ * Calculates a calorie goal for muscle gain.
  */
 public class MuscleGainStrategy implements GoalStrategy {
     @Override
     public double calculateGoal(User user) {
-        return 2600;
+        return CalorieFormulaUtil.calculateMaintenanceCalories(user) + 250;
     }
 }

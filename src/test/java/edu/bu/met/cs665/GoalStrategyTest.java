@@ -10,7 +10,7 @@ package edu.bu.met.cs665;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests strategy-based calorie-goal calculations for users.
@@ -18,14 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GoalStrategyTest {
     @Test
     public void testUserCanSwitchGoalStrategy() {
-        User user = new User("Test User", 25, 170, 70, new WeightLossStrategy());
+        User user = new User("Test User", 70, 175, 23, ActivityLevel.MODERATE, new WeightLossStrategy());
 
-        assertEquals(1800, user.getDailyCalorieGoal());
+        double weightLoss = user.getDailyCalorieGoal();
 
         user.setGoalStrategy(new MaintenanceStrategy());
-        assertEquals(2200, user.getDailyCalorieGoal());
+        double maintenance = user.getDailyCalorieGoal();
 
         user.setGoalStrategy(new MuscleGainStrategy());
-        assertEquals(2600, user.getDailyCalorieGoal());
+        double muscleGain = user.getDailyCalorieGoal();
+
+        assertTrue(weightLoss < maintenance);
+        assertTrue(maintenance < muscleGain);
     }
 }

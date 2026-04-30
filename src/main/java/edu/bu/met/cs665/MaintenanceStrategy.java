@@ -9,11 +9,11 @@
 package edu.bu.met.cs665;
 
 /**
- * Calculates a fixed calorie goal for weight maintenance.
+ * Calculates a calorie goal for weight maintenance.
  */
 public class MaintenanceStrategy implements GoalStrategy {
     @Override
     public double calculateGoal(User user) {
-        return 2200;
+        return CalorieFormulaUtil.calculateMaintenanceCalories(user);
     }
 }
