@@ -11,7 +11,7 @@ This assignment implements a small nutrition-tracking application. The project l
 
 # GitHub Repository Link:
 
-https://github.com/{JohannesSBA}/cs-665-assignment-final
+https://github.com/JohannesSBA/cs-665-assignment-final
 
 # Implementation Description
 
